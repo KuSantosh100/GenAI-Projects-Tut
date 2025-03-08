@@ -45,8 +45,7 @@ def run(image_name):
 
         ext = Path(image_name).suffix
         image_description = json.loads(result.text)
-        new_filename = f"{image_description['image1']}_{image_description['image2']}{ext}"
-        
+        new_filename = os.path.join("assets", f"{image_description['image1']}_{image_description['image2']}{ext}")
         os.rename(image_name, new_filename)
         print(f"File renamed to : {new_filename}")
     
@@ -63,10 +62,15 @@ image_extensions = ("*.jpg", "*.jpeg", "*.png")
 image_files = []
 
 for exe in image_extensions:
-    image_files.extend(glob.glob(exe))
+    image_files.extend(glob.glob(os.path.join("assets", exe)))
+
 
 print(f"Found {len(image_files)} image file.")
 
-
+print("Renaming started....")
 for image in image_files:
+    print(f'Renaming... {image}')
     run(image)
+    print(f'Sub-process ended...')
+    
+print("Thank You !!!")
